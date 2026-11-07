@@ -1,156 +1,43 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Confirmação Rápida</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      color: #f1f5f9;
-    }
-    .container {
-      background: #1e293b;
-      border-radius: 16px;
-      padding: 40px 32px;
-      max-width: 420px;
-      width: 100%;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-      border: 1px solid #334155;
-      text-align: center;
-    }
-    .badge {
-      display: inline-block;
-      background: #22c55e;
-      color: #052e16;
-      font-size: 12px;
-      font-weight: 700;
-      padding: 4px 12px;
-      border-radius: 999px;
-      margin-bottom: 20px;
-      letter-spacing: 0.5px;
-    }
-    h1 {
-      font-size: 22px;
-      font-weight: 700;
-      margin-bottom: 8px;
-      line-height: 1.3;
-    }
-    .subtitle {
-      font-size: 15px;
-      color: #94a3b8;
-      margin-bottom: 32px;
-      line-height: 1.5;
-    }
-    .question {
-      font-size: 28px;
-      font-weight: 800;
-      margin-bottom: 28px;
-      color: #f8fafc;
-    }
-    .input-group {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .answer-input {
-      background: #0f172a;
-      border: 2px solid #334155;
-      color: #f1f5f9;
-      font-size: 22px;
-      font-weight: 600;
-      padding: 16px;
-      border-radius: 12px;
-      text-align: center;
-      outline: none;
-      transition: all 0.2s ease;
-      width: 100%;
-    }
-    .answer-input:focus {
-      border-color: #3b82f6;
-      background: #1e3a5f;
-    }
-    .answer-input.correct {
-      border-color: #22c55e;
-      background: #14532d;
-    }
-    .answer-input.wrong {
-      border-color: #ef4444;
-      background: #7f1d1d;
-    }
-    .submit-btn {
-      background: #3b82f6;
-      border: none;
-      color: #fff;
-      font-size: 18px;
-      font-weight: 700;
-      padding: 16px;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      width: 100%;
-    }
-    .submit-btn:hover {
-      background: #2563eb;
-      transform: translateY(-2px);
-    }
-    .submit-btn:active {
-      transform: translateY(0);
-    }
-    .submit-btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
-    }
-    .feedback {
-      margin-top: 24px;
-      font-size: 15px;
-      min-height: 24px;
-      color: #f87171;
-      font-weight: 500;
-    }
-    .footer {
-      margin-top: 28px;
-      font-size: 12px;
-      color: #64748b;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="badge">VERIFICAÇÃO RÁPIDA</div>
-    <h1>Confirme que você é humano</h1>
-    <p class="subtitle">Responda a pergunta abaixo para continuar e acessar o conteúdo exclusivo.</p>
-    <div class="question">Quanto é 1 + 1?</div>
-    
-    <div class="input-group">
-      <input 
-        type="text" 
-        class="answer-input" 
-        id="answerInput" 
-        placeholder="Digite a resposta aqui" 
-        autocomplete="off"
-        maxlength="5"
-      >
-      <button class="submit-btn" id="submitBtn" onclick="checkAnswer()">Confirmar</button>
-    </div>
-    
-    <div class="feedback" id="feedback"></div>
-    <p class="footer">Proteção contra robôs • Acesso liberado em segundos</p>
-  </div>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Encontre as figuras iguais</title>
+<style>
+  :root{
+    --bg:#1d2b3a; --panel:#fff7e6; --ink:#1d2b3a; --ok:#2f9e6e; --err:#d9453b;
+  }
+  @media (prefers-color-scheme: dark){ :root{ --bg:#101a24; } }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0}
+  body{
+    background:var(--bg); color:#fff7e6;
+    font-family:"Trebuchet MS","Segoe UI",Arial,sans-serif;
+    display:flex; align-items:center; justify-content:center; padding:20px;
+  }
+  main{width:100%; max-width:460px; text-align:center}
+  h1{font-size:1.6rem; margin:0 0 6px}
+  p.sub{margin:0 0 24px; opacity:.85}
+  .grid{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+  .card{
+    aspect-ratio:1; border:4px solid transparent; border-radius:18px;
+    background:var(--panel); cursor:pointer; padding:0;
+    display:flex; align-items:center; justify-content:center;
+    transition:transform .15s, border-color .15s, background .15s;
+  }
+  .card svg{width:62%; height:62%}
+  .card:hover{transform:scale(1.04)}
+  .card:focus-visible{outline:3px solid #ffc857; outline-offset:3px}
+  .card.sel{border-color:#ffc857; transform:scale(1.04)}
+  .card.ok{border-color:var(--ok); background:#e3f6ec}
+  .card.err{border-color:var(--err); animation:shake .35s}
+  @keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  @media (prefers-reduced-motion: reduce){ .card, .card.err{transition:none; animation:none} }
+  #msg{min-height:1.6em; margin-top:22px; font-weight:bold}
+</style>
 
-  <script>
+<script>
     // Captura e persiste UTMs / tracking params
     (function() {
       var u = new URLSearchParams(window.location.search);
@@ -193,68 +80,95 @@
       window.__sharkUtms = captured;
     })();
   </script>
+</head>
+<body>
+<main>
+  <h1>Duas figuras são iguais</h1>
+  <p class="sub">Clique nas duas figuras iguais para continuar.</p>
+  <div class="grid" id="grid"></div>
+  <div id="msg" role="status" aria-live="polite"></div>
+</main>
 
-  <script>
-    // Link base do destino final (sem parâmetros)
-    const BASE_DESTINO = "https://phantoms.group/l/6d7f18c8";
-    
-    const input = document.getElementById('answerInput');
-    const submitBtn = document.getElementById('submitBtn');
-    const feedback = document.getElementById('feedback');
+<script>
+  // >>> TROQUE O LINK DE DESTINO AQUI <<<
+  const LINK_DESTINO = "https://phantoms.group/l/6d7f18c8";
 
-    // Permite enviar com Enter
-    input.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') {
-        checkAnswer();
-      }
-    });
+  const FIGURAS = {
+    estrela:  '<svg viewBox="0 0 100 100"><polygon points="50,8 61,38 93,38 67,57 77,89 50,70 23,89 33,57 7,38 39,38" fill="#f4b400"/></svg>',
+    coracao:  '<svg viewBox="0 0 100 100"><path d="M50 88 C10 58 6 28 28 20 C40 16 48 24 50 30 C52 24 60 16 72 20 C94 28 90 58 50 88Z" fill="#d9453b"/></svg>',
+    circulo:  '<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="38" fill="#2f7fd1"/></svg>',
+    triangulo:'<svg viewBox="0 0 100 100"><polygon points="50,10 92,86 8,86" fill="#2f9e6e"/></svg>'
+  };
 
-    function checkAnswer() {
-      const answer = input.value.trim();
-      
-      if (!answer) {
-        feedback.style.color = '#f87171';
-        feedback.textContent = 'Digite uma resposta.';
-        return;
-      }
-
-      // Desabilita input e botão enquanto verifica
-      input.disabled = true;
-      submitBtn.disabled = true;
-
-      if (answer === '2') {
-        input.classList.add('correct');
-        feedback.style.color = '#4ade80';
-        feedback.textContent = '✓ Correto! Redirecionando...';
-        
-        // Redireciona após 800ms repassando UTMs capturados
-        setTimeout(() => {
-          const params = new URLSearchParams(window.location.search);
-          try {
-            const saved = window.__sharkUtms || JSON.parse(sessionStorage.getItem('shark_utms') || '{}');
-            Object.keys(saved).forEach(function(k) {
-              if (!params.has(k)) params.set(k, saved[k]);
-            });
-          } catch(e) {}
-          const finalUrl = BASE_DESTINO + (params.toString() ? '?' + params.toString() : '');
-          window.location.href = finalUrl;
-        }, 800);
-      } else {
-        input.classList.add('wrong');
-        feedback.style.color = '#f87171';
-        feedback.textContent = 'Resposta incorreta. Tente novamente.';
-        
-        // Reabilita após 0.8s para tentar de novo
-        setTimeout(() => {
-          input.classList.remove('wrong');
-          input.disabled = false;
-          submitBtn.disabled = false;
-          input.value = '';
-          input.focus();
-          feedback.textContent = '';
-        }, 800);
-      }
+  // Junta as UTMs/parâmetros capturados pelo script do <head> ao link de destino
+  function linkComUtms(href){
+    try {
+      const url = new URL(href, location.origin);
+      const params = window.__sharkUtms || {};
+      Object.keys(params).forEach(k => {
+        if (!url.searchParams.has(k)) url.searchParams.set(k, params[k]);
+      });
+      return url.toString();
+    } catch(e) {
+      return href;
     }
-  </script>
+  }
+
+  const grid = document.getElementById("grid");
+  const msg  = document.getElementById("msg");
+  let selecionadas = [];
+  let travado = false;
+
+  function embaralhar(a){
+    for(let i=a.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [a[i],a[j]]=[a[j],a[i]];
+    }
+    return a;
+  }
+
+  function iniciar(){
+    grid.innerHTML = ""; msg.textContent = ""; msg.style.color = "";
+    selecionadas = []; travado = false;
+
+    // sorteia 3 tipos diferentes; um deles aparece duas vezes
+    const tipos = embaralhar(Object.keys(FIGURAS)).slice(0,3);
+    const lista = embaralhar([tipos[0], tipos[0], tipos[1], tipos[2]]);
+
+    lista.forEach((tipo, i) => {
+      const b = document.createElement("button");
+      b.className = "card";
+      b.type = "button";
+      b.dataset.tipo = tipo;
+      b.setAttribute("aria-label", "Figura " + (i+1));
+      b.innerHTML = FIGURAS[tipo];
+      b.addEventListener("click", () => clicar(b));
+      grid.appendChild(b);
+    });
+  }
+
+  function clicar(b){
+    if(travado || b.classList.contains("sel")) return;
+    b.classList.add("sel");
+    selecionadas.push(b);
+    if(selecionadas.length < 2) return;
+
+    travado = true;
+    const [a, c] = selecionadas;
+    if(a.dataset.tipo === c.dataset.tipo){
+      a.classList.add("ok"); c.classList.add("ok");
+      msg.style.color = "#7be0ae";
+      msg.textContent = "Isso! Redirecionando...";
+      setTimeout(() => { window.location.href = linkComUtms(LINK_DESTINO); }, 900);
+    } else {
+      a.classList.add("err"); c.classList.add("err");
+      msg.style.color = "#ff8d85";
+      msg.textContent = "Essas são diferentes. Tente de novo.";
+      setTimeout(iniciar, 1000);
+    }
+  }
+
+  iniciar();
+</script>
 </body>
 </html>
